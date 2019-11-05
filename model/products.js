@@ -12,6 +12,10 @@ const productSchema = new Schema({
         required:true,
         type:String
     },
+    source:{
+        required:true,
+        type:String
+    },
     curr_price:{
         required:true,
         type:Number
@@ -24,10 +28,6 @@ const productSchema = new Schema({
         type:Number
     },
     img_url:{
-        required:true,
-        type:String
-    },
-    refreshTime:{
         required:true,
         type:String
     },
