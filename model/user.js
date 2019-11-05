@@ -16,6 +16,10 @@ const userSchema = new Schema({
         required:true,
         type:String
     },
+    phone:{
+        required:true,
+        type:Number
+    },
     products:[{
         type: Schema.Types.ObjectId,
         ref: 'products',
@@ -23,5 +27,5 @@ const userSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('user', usertSchema);
+module.exports = mongoose.model('user', userSchema);
 

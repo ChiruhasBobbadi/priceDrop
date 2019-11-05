@@ -15,7 +15,11 @@ const productSchema = new Schema({
     curr_price:{
         required:true,
         type:Number
-    }, tar_price:{
+    },actual_price:{
+        required:true,
+        type:Number
+    }
+    , tar_price:{
         required:true,
         type:Number
     },
