@@ -1,5 +1,5 @@
 const cheerio = require('cheerio');
-const fs = require('fs');
+
 const request = require('request');
 
 exports.amazonList = (req, res, next) => {
@@ -62,13 +62,7 @@ exports.amazonList = (req, res, next) => {
             res.status(404);
         }
 
-        //send the products array to the client.
-        console.log(products);
-        console.log(len);
-        // fs.writeFile('C:\\Users\\PC\\WebstormProjects\\priceDrop\\temp.json',JSON.stringify(products),err => {
-        //     console.log(err);
-        // });
-        //console.log(response.elapsedTime);
+
 
 
 

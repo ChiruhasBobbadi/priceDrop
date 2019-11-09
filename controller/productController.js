@@ -15,12 +15,11 @@ exports.addProduct = (req, res, next) => {
     let prodId;
     new Product(product).save().then(result => {
         console.log(result);
-        if(result){
+        if (result) {
             prodId = result._id;
 
             return user.findOne(userID)
-        }
-        else{
+        } else {
             return res.status(404);
         }
 
@@ -33,7 +32,7 @@ exports.addProduct = (req, res, next) => {
 
             if (length === 3) {
                 // not possible to add more since limit is only 3
-                 res.status(404).json({"message": "limit exceded"})
+                res.status(404).json({"message": "limit exceded"})
             } else {
                 result.products.push(prodId);
                 return result.save()
@@ -41,17 +40,17 @@ exports.addProduct = (req, res, next) => {
 
 
         } else {
-             res.status(404).json({"message": "User not found"})
+            res.status(404).json({"message": "User not found"})
         }
 
 
-    }).then(user=>{
-        if(user){
-            res.status(200).json({"messaage":"sucess"});
-        }else{
+    }).then(user => {
+        if (user) {
+            res.status(200).json({"messaage": "sucess"});
+        } else {
             return res.status(404);
         }
-    }).catch(err=>{
+    }).catch(err => {
         console.log(err);
         res.status(404);
     })
@@ -77,21 +76,4 @@ exports.getProducts = (req, res, next) => {
 };
 
 
-//
-//
-//
-// }).then(user=>{
-//     if(user){
-//
-//     }
-//
-// }).then(result=>{
-//     if(result)
-//     {
-//         // send sucess response.
-//     }
-// }).catch(err=>{
-//
-// })
-//
-//
+
