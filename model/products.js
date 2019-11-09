@@ -16,18 +16,18 @@ const productSchema = new Schema({
         required:true,
         type:String
     },
-    curr_price:{
+    current_price:{
         required:true,
-        type:Number
+        type:String
     },actual_price:{
         required:true,
-        type:Number
+        type:String
     }
-    , tar_price:{
+    , target_price:{
         required:true,
-        type:Number
+        type:String
     },
-    img_url:{
+    image_url:{
         required:true,
         type:String
     },

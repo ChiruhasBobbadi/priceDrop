@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const sourceController=require('../controller/scrapeController');
+const scrapeController=require('../controller/scrapeController');
 
-router.get('/amazon',sourceController.postLogin);
+router.post('/amazon',scrapeController.amazonList);
 
-router.get('/flipkart',sourceController.postsignUp);
+router.post('/flipkart',scrapeController.flipkartList);
 
-router.get('/myntra',sourceController.postsignUp);
+router.post('/myntra',scrapeController.myntraList);
 
 module.exports = router;

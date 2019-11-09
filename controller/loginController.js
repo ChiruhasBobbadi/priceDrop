@@ -1,28 +1,36 @@
 const bcrypt = require('bcrypt');
-const user = require('../model/user');
+const User = require('../model/user');
 
 exports.postLogin = (req, res, next) => {
 
     //TODO
-    const email = "";
-    const password = "";
+    const email = req.body.email;
+    const password = req.body.password;
     // fetch data from db.
 
-    user.findOne({email: email}).then(res => {
+    User.findOne({email: email}).then(result => {
 
-        if (res) {
-            return bcrypt.compare(password, hash)
+        if (result) {
+
+            return bcrypt.compare(password, result.password)
+        }
+        else{
+            return res.status(404).json({"message":"email don't exist"})
         }
 
-    }).then(res => {
-        if (res) {
+    }).then(result => {
+        if (result) {
             // password matches
+           return res.status(200).json({"message":"Sucess"})
         } else {
             // passwords dont match.
+            return res.status(404).json({"message":"Don't match"})
         }
     })
         .catch(err => {
+
             // return 404
+             res.status(404);
         });
 
 
@@ -31,37 +39,45 @@ exports.postLogin = (req, res, next) => {
 exports.postsignUp = (req, res, next) => {
     // create a new user.
 
+
     //TODO
-    let email = "";
-    let password = "";
-    let phone = "";
-    let name = "";
+    let email = req.body.email;
+    let password = req.body.password;
+    let phone = req.body.phone;
+    let name = req.body.name;
 
 
     bcrypt.hash(password, 12).then(hash => {
         password = hash;
 
-        return user.findOne({email: email});
+
+        return User.findOne({email: email});
 
 
     }).then(user => {
 
         if (user) {
             // send response stating a email id is already present.
+
+            return res.status(404).json({"message":"user exists"});
         }
 
-            return new user({
+            const us= new User({
                 email: email,
                 password: password,
                 name: name,
                 phone: phone
-            }).save();
+            });
+
+        return us.save();
 
     }).then(result => {
-        console.log(result);
-        // send appropriate responses.
+
+      return res.status(200).json({"message":"sucess"});
     }).catch(err => {
         // send 404 error.
+
+        res.status(404);
     });
 
 };

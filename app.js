@@ -3,23 +3,28 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const sourcesRoutes = require('./routes/sources');
+const productRoute = require('./routes/product');
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const authRoutes = require('./routes/auth');
+const body_parser = require('body-parser');
+// const usersRouter = require('./routes/users');
 const values = require('./util/values');
-const MongoDBStore = require('connect-mongodb-session')(session);
+// const MongoDBStore = require('connect-mongodb-session')(session);
 const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(body_parser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // session store
-const store = new MongoDBStore({
-    uri: values.mongoDbUri,
-    collection: 'sessions'
-});
+// const store = new MongoDBStore({
+//     uri: values.mongoDbUri,
+//     collection: 'sessions'
+// });
 
 mongoose.connect(values.mongoDbUri)
     .then(result => {
@@ -41,19 +46,21 @@ mongoose.connect(values.mongoDbUri)
 
 
 // sessions
-app.use(
-    session({
-        secret: 'my secret',
-        resave: false,
-        saveUninitialized: false,
-        store: store
-    })
-);
+// app.use(
+//     session({
+//         secret: 'my secret',
+//         resave: false,
+//         saveUninitialized: false,
+//         store: store
+//     })
+// );
 
 
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
+// app.use('/users', usersRouter);
+app.use(authRoutes);
+app.use(productRoute);
+app.use(sourcesRoutes);
 module.exports = app;

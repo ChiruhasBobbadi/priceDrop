@@ -2,9 +2,9 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const request = require('request');
 
-exports.amazonList = (req,res,next)=>{
+exports.amazonList = (req, res, next) => {
 
-    const product = 'galaxy buds';
+    const product = req.body.product;
     const page = '1';
     const url = `https://www.amazon.in/s?k=${product}&page=${page}`;
 
@@ -17,64 +17,71 @@ exports.amazonList = (req,res,next)=>{
         const $ = cheerio.load(data);
         let len = 0;
         let products = [];
-        $(".s-result-list .celwidget ").each((i, el) => {
+        try{
+            $(".s-result-list .celwidget ").each((i, el) => {
+
+                // image url
+                const imageUrl = $(el).find('.s-image').attr('src');
+
+                const url = "https://www.amazon.in" + $(el).find('.a-link-normal').attr("href");
+                //current price
+                const temp = $(el).find('.a-price .a-price-whole');
+
+                const curr_price = (String(temp).split("</span>")[0]).split('>')[1];
+                //const curr_price = (String(temp));
+
+                //const  curr_price = (String(temp).split(">")[1]).split('<')[0];
 
 
-            len++;
-            // image url
-            const imageUrl = $(el).find('.s-image').attr('src');
+                const sponsored = $(el).find('.a-row .a-color-secondary').text();
 
-            const url = "https://www.amazon.in" + $(el).find('.a-link-normal').attr("href");
-            //current price
-            const temp = $(el).find('.a-price .a-price-whole');
+                // actual price
+                const ac_price = $(el).find(' .a-text-price .a-offscreen').text();
+                // todo remove special characters from string.
 
-            const curr_price = (String(temp).split("</span>")[0]).split('>')[1];
-            //const curr_price = (String(temp));
+                const p_name = $(el).find('.s-image').attr('alt');
 
-            //const  curr_price = (String(temp).split(">")[1]).split('<')[0];
+                if (imageUrl && url && curr_price && ac_price && p_name)
+                    products.push({
+                        "url": url,
+                        "name": p_name,
+                        "actual_price": ac_price,
+                        "current_price": curr_price,
+                        "image_url": imageUrl,
+                        "sponsored": sponsored
 
+                    });
 
-            const sponsored = $(el).find('.a-row .a-color-secondary').text();
+                len++;
 
-            // actual price
-            const ac_price = $(el).find(' .a-text-price .a-offscreen').text();
-            // todo remove special characters from string.
+            });
+            return res.status(200).json(products);
+        }
 
-            const p_name = $(el).find('.s-image').attr('alt');
-
-            if (imageUrl && url && curr_price && ac_price && p_name)
-                products.push({
-                    "url": url,
-                    "p_name": p_name,
-                    "p_actual_price": ac_price,
-                    "p_current_price": curr_price,
-                    "image_url": imageUrl,
-                    "sponsored": sponsored
-
-                });
-
-            len++;
-
-        });
+        catch (e) {
+            res.status(404);
+        }
 
         //send the products array to the client.
-        console.log( products);
+        console.log(products);
         console.log(len);
         // fs.writeFile('C:\\Users\\PC\\WebstormProjects\\priceDrop\\temp.json',JSON.stringify(products),err => {
         //     console.log(err);
         // });
         //console.log(response.elapsedTime);
 
+
+
     });
 
 };
 
-exports.flipkartList = (req,res,next)=>{
+exports.flipkartList = (req, res, next) => {
 
 
 };
 
-exports.myntraList = (req,res,next)=>{
+exports.myntraList = (req, res, next) => {
 
 
 };
