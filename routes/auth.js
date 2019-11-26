@@ -6,4 +6,7 @@ router.post('/login',loginController.postLogin);
 
 router.post('/signup',loginController.postsignUp);
 
+router.delete('/delete',loginController.deleteUser);
+
+
 module.exports = router;

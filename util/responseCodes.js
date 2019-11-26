@@ -1,9 +1,14 @@
 
-module.exports.loginSucessResponse = `{
-"status_code":200,
-"status":"success",
+module.exports.loginSuccessResponse =function(id){
+
+
+    return `{
+"status_code":"200",
+"id":${id},
+"status":"login failed",
 "error_message":""}
 `;
+} ;
 
 module.exports.error=`{
 "status_code":400,
@@ -20,11 +25,13 @@ module.exports.loginFailedResponse=function(status,messasge){
 };
 
 
-module.exports.signupSucessResponse = `{
+module.exports.signupSucessResponse =function (id) {
+  return  {
 "status_code":200,
+"id":id,
 "status":"success",
 "error_message":""}
-`;
+;};
 
 module.exports.signupFailedResponse = function(status,message){
     return `{

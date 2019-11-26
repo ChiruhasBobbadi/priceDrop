@@ -12,7 +12,15 @@ const body_parser = require('body-parser');
 const values = require('./util/values');
 // const MongoDBStore = require('connect-mongodb-session')(session);
 const app = express();
+/*
+app.use((req,res,next)=>{
+    res.setHeader('Access-Control-Allow-Origin','*');
 
+    res.setHeader('Access-Control-Allow-Methods','get,post,put,patch,delete');
+
+    res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorization');
+    next()
+});*/
 app.use(logger('dev'));
 app.use(express.json());
 app.use(body_parser.json());
