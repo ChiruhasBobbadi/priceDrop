@@ -6,23 +6,23 @@ const userSchema = new Schema({
 
     email:{
         required:true,
-        type:String
+        type: Schema.Types.String
     },
     password:{
         required:true,
-        type:String
+        type: Schema.Types.String
     },
     name:{
         required:true,
-        type:String
+        type: Schema.Types.String
     },
     phone:{
         required:true,
-        type:Number
+        type: Schema.Types.Number
     },
     products:[{
-        type: Schema.Types.ObjectId,
-        ref: 'products',
+        _id: {type: Schema.Types.ObjectId, ref: 'product'}
+
     }]
 });
 

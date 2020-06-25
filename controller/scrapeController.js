@@ -4,9 +4,8 @@ const request = require('request');
 
 exports.amazonList = (req,res,next)=>{
 
-    const product = 'galaxy buds';
-    const page = '1';
-    const url = `https://www.amazon.in/s?k=${product}&page=${page}`;
+
+    const url = `https://www.amazon.in/MOJOREST-Cervical-Sleeping-Orthopedic-Breathable/dp/B0819K6B8L/ref=sr_1_9?crid=1ITBYAZ0PYKPI&dchild=1&keywords=memory+foam+pillows&qid=1593087379&sprefix=memory+f%2Caps%2C295&sr=8-9`;
 
     request.get(url, function (
         error,
@@ -57,13 +56,10 @@ exports.amazonList = (req,res,next)=>{
 
         });
 
-        //send the products array to the client.
+
         console.log( products);
         console.log(len);
-        // fs.writeFile('C:\\Users\\PC\\WebstormProjects\\priceDrop\\temp.json',JSON.stringify(products),err => {
-        //     console.log(err);
-        // });
-        //console.log(response.elapsedTime);
+
 
     });
 
@@ -78,3 +74,6 @@ exports.myntraList = (req,res,next)=>{
 
 
 };
+
+
+

@@ -1,23 +1,34 @@
 const cron = require('node-cron');
-const products = require('../model/products');
+const Products = require('../model/products');
+
 const util = require('../util/scrapeHelper');
 
-products.find({}).then(products => {
+module.exports.amzn = () => {
+    cron.schedule("* * * * *", async () => {
+        try {
 
-    if (products) {
+            const products = await Products.find({});
+            if (products)
+                await products.forEach(async (el) => {
 
-        products.forEach((el)=>{
-            if(el.source==='amazon')
-                util.amazonProduct(el);
-            else if(el.source==='flipkart')
-                util.flipkartProduct(el);
-            else if(el.source==='myntra')
-                util.myntraProduct(el);
-        })
+                    if (el.source === 'AMZN')
+                        await util.amazonProduct(el);
+                    else if(el.source==='flipkart')
+                        util.flipkartProduct(el);
+                    else if(el.source==='myntra')
+                        util.myntraProduct(el);
+                })
+        }catch(e){
+            console.log(e);
+        }},
 
-    }
-}).catch(error => {
-    console.log(error);
-});
+            {
+                timezone: "Asia/Kolkata"
+            }
+        )
+};
+
+
+
 
 

@@ -31,11 +31,13 @@ exports.postLogin = (req, res, next) => {
 exports.postsignUp = (req, res, next) => {
     // create a new user.
 
-    //TODO
-    let email = "";
-    let password = "";
-    let phone = "";
-    let name = "";
+    console.log("hello");
+
+    let email = req.body.email;
+    let password = req.body.password;
+    let phone = req.body.phone;
+    let name = req.body.name;
+
 
 
     bcrypt.hash(password, 12).then(hash => {
@@ -44,9 +46,9 @@ exports.postsignUp = (req, res, next) => {
         return user.findOne({email: email});
 
 
-    }).then(user => {
+    }).then(us => {
 
-        if (user) {
+        if (us) {
             // send response stating a email id is already present.
         }
 
@@ -58,10 +60,14 @@ exports.postsignUp = (req, res, next) => {
             }).save();
 
     }).then(result => {
-        console.log(result);
+
+        res.json({'msg': 'success'}).statusCode = 200;
+
         // send appropriate responses.
     }).catch(err => {
-        // send 404 error.
+        console.log(err);
+        res.json({'msg': 'failed'}).statusCode = 404;
     });
+
 
 };
